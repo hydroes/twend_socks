@@ -11,7 +11,12 @@ app.listen(443);
 // $pull->bind('tcp://127.0.0.1:5555'); // Binding to 127.0.0.1 means the only client that can connect is itself
 // $pull->on('message', array($pusher, 'onBlogEntry'));
 
-zmq.bind('tcp://127.0.0.1:5555');
+zmqSocket = zmq.socket("sub");
+
+//console.log(zmqSocket)
+zmqSocket.connect('tcp://127.0.0.1:5555');
+
+
 
 io.sockets.on('connection', function (socket) {
 //  socket.emit('news', { hello: 'world' });
@@ -23,6 +28,6 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-zmq.on('message', function(data){
+zmqSocket.on('message', function(data){
     socket.volatile.emit('stream', {data : data});
 });
