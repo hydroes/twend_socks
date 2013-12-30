@@ -21,6 +21,11 @@ zmqSocket.connect('tcp://127.0.0.1:5555');
 io.sockets.on('connection', function (socket) {
 //  socket.emit('news', { hello: 'world' });
 
+    zmqSocket.on('message', function(data) {
+        console.log('tweets bru!!');
+        socket.volatile.emit('stream', {data : data});
+    });
+
     socket.volatile.emit('news', {hello : 'some news that you may or may not get'});
 
     socket.on('my other event', function (data) {
@@ -28,6 +33,4 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-zmqSocket.on('message', function(data){
-    socket.volatile.emit('stream', {data : data});
-});
+
