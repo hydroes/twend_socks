@@ -1,8 +1,8 @@
-var app = require('http').createServer()
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
+var app = require('http').createServer(),
+    io = require('socket.io').listen(app),
+    fs = require('fs'),
+    zmq = require("zmq")
 
-zmq = require("zmq")
 
 app.listen(443);
 
