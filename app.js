@@ -18,7 +18,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.volatile.emit('news', {hello : 'some news that you may or may not get'});
 
-    socket.on('my other event', function (data) {
+    socket.bind('my other event', function (data) {
       console.log(data);
     });
 });
