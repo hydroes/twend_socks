@@ -11,6 +11,7 @@ $socket->connect('tcp://127.0.0.1:3000');
 $count = 0;
 while (true) {
     $socket->send('some work ' . $count);
+    echo "some work  $count \n";
     $count++;
     sleep(1);
 }
