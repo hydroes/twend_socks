@@ -6,7 +6,7 @@ $context = new ZMQContext();
 $socket = new ZMQSocket($context, ZMQ::SOCKET_PUSH);
 
 //If I want to connect to the server I use this line
-$socket->connect('tcp://127.0.0.1:3000');
+$socket->bind('tcp://127.0.0.1:3000');
 
 $count = 0;
 while (true) {
