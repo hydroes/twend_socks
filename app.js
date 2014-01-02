@@ -6,14 +6,12 @@ var app = require('http').createServer(),
 app.listen(443);
 
 //console.log(zmqSocket)
-zmqSocket = zmq.socket('pull');
+var zmqSocket = zmq.socket('pull');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
-var clientScockets = Array();
 
 io.sockets.on('connection', function (socket) {
 
-//    clientScockets[] = socket;
 //    zmqSocket.on('message', function(msg) {
 //        socket.volatile.emit('stream', {data : msg.toString()});
 //    });
