@@ -35,7 +35,7 @@ function getTweets() {
     });
 }
 
-zmqSocket.on('message', function(msg) {
+//zmqSocket.on('message', function(msg) {
 //    console.log('tweets bru!!');
 //            sockets.emit('stream', {data : msg.toString()});
 
