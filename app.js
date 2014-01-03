@@ -16,7 +16,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('tweets', function (socket)
   {
-        zmqSocket.on('message', function(msg) {
+        zmqSocket.on('message', function(msg, socket) {
             socket.volatile.emit('stream', {data : msg.toString()});
         });
 //        console.log(data);
