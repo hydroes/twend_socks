@@ -22,10 +22,10 @@ zmqSocket.on('message', function(msg) {
 //    console.log('tweets bru!!');
 //            sockets.emit('stream', {data : msg.toString()});
 
-        socket.volatile.emit('stream', {data : msg.toString()});
+//        socket.volatile.emit('stream', {data : msg.toString()});
 
         // an event sent to all connected clients
-//        io.sockets.emit(msg.toString());
+        io.sockets.emit(msg.toString());
 
 });
 
