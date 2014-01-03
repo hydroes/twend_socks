@@ -16,13 +16,22 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('tweets', function (socket)
   {
-        zmqSocket.on('message', function(msg, socket) {
-            socket.volatile.emit('stream', {data : msg.toString()});
+      var tweets = setInterval(function () {
+        getTweets(function () {
+          socket.volatile.emit('bieber tweet', 'tweet');
         });
-//        console.log(data);
+      }, 100);
+
+      socket.on('disconnect', function () {
+        clearInterval(tweets);
+      });
+
   });
 });
 
+function getTweets() {
+
+}
 
 //zmqSocket.on('message', function(msg) {
 //    console.log('tweets bru!!');
