@@ -10,7 +10,7 @@
     <script src="/node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script>
     socket = io.connect('http://192.241.120.110:443');
-    socket.on('tweets', function (data) {
+    socket.emit('tweets', function (data) {
         console.log(data);
     });
   </script>
