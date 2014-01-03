@@ -6,15 +6,15 @@ var app = require('http').createServer(),
 app.listen(443);
 
 //console.log(zmqSocket)
-var zmqSocket = zmq.socket('pull');
-zmqSocket.connect('tcp://127.0.0.1:3000');
+//var zmqSocket = zmq.socket('pull');
+//zmqSocket.connect('tcp://127.0.0.1:3000');
 
 
 io.sockets.on('connection', function (socket) {
 
-//    zmqSocket.on('message', function(msg) {
-//        socket.volatile.emit('stream', {data : msg.toString()});
-//    });
+    zmqSocket.on('message', function(msg) {
+        socket.volatile.emit('stream', {data : msg.toString()});
+    });
 
     socket.volatile.emit('news', {hello : 'you are connected'});
 //
@@ -24,8 +24,8 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-zmqSocket.on('message', function(msg) {
-    console.log('tweets bru!!');
+//zmqSocket.on('message', function(msg) {
+//    console.log('tweets bru!!');
 //            sockets.emit('stream', {data : msg.toString()});
 
 //        socket.volatile.emit('stream', {data : msg.toString()});
@@ -33,6 +33,6 @@ zmqSocket.on('message', function(msg) {
         // an event sent to all connected clients
 //        io.sockets.emit(msg.toString());
 
-});
+//});
 
 
