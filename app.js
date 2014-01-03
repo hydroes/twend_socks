@@ -17,9 +17,7 @@ io.sockets.on('connection', function (socket) {
 //  socket.on('tweets', function (socket)
 //  {
       var tweets = setInterval(function () {
-        getTweets(function () {
-          socket.volatile.emit('tweet', 'tweet');
-        });
+        getTweets(socket);
       }, 100);
 
       socket.on('disconnect', function () {
@@ -29,9 +27,10 @@ io.sockets.on('connection', function (socket) {
 //  });
 });
 
-function getTweets() {
+function getTweets(socket) {
     zmqSocket.on('message', function(msg) {
         console.log(msg.toString());
+        socket.volatile.emit('tweet', 'tweet');
     });
 }
 
