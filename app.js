@@ -5,27 +5,25 @@ var app = require('http').createServer(),
 
 app.listen(443);
 
-console.log(zmqSocket)
 var zmqSocket = zmq.socket('pull');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
+var sockets = new Array();
 
-io.sockets.on('connection', function (socket) {
-//  socket.emit('news', { hello: 'world' });
-
+//io.sockets.on('connection', function (socket) {
 
 //  socket.on('tweets', function (socket)
 //  {
-      var tweets = setInterval(function () {
-        getTweets(socket);
-      }, 100);
-
-      socket.on('disconnect', function () {
-        clearInterval(tweets);
-      });
+//      var tweets = setInterval(function () {
+//        getTweets(socket);
+//      }, 100);
+//
+//      socket.on('disconnect', function () {
+//        clearInterval(tweets);
+//      });
 
 //  });
-});
+//});
 
 function getTweets(socket) {
     zmqSocket.on('message', function(msg) {
@@ -47,4 +45,17 @@ function getTweets(socket) {
 //
 //});
 
+// possible flow
 
+io.sockets.on('connection', function (socket) {
+    sockets.push(socket);
+});
+
+zmqSocket.on('message', function(msg) {
+    if (sockets.length !== 0) {
+        for (i = 0; i < sockets.length; i++) {
+            var sock = sockets[i];
+            sock.volatile.emit('tweet', msg.toString());
+        }
+    }
+});
