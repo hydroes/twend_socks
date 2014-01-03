@@ -14,8 +14,8 @@ io.sockets.on('connection', function (socket) {
 //  socket.emit('news', { hello: 'world' });
 
 
-  socket.on('tweets', function (socket)
-  {
+//  socket.on('tweets', function (socket)
+//  {
       var tweets = setInterval(function () {
         getTweets(function () {
           socket.volatile.emit('bieber tweet', 'tweet');
@@ -26,7 +26,7 @@ io.sockets.on('connection', function (socket) {
         clearInterval(tweets);
       });
 
-  });
+//  });
 });
 
 function getTweets() {
