@@ -11,22 +11,30 @@ zmqSocket.connect('tcp://127.0.0.1:3000');
 
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+//  socket.emit('news', { hello: 'world' });
+
+
+  socket.on('tweets', function (socket)
+  {
+        zmqSocket.on('message', function(msg) {
+            socket.volatile.emit('stream', {data : msg.toString()});
+        });
+//        console.log(data);
   });
 });
 
 
-zmqSocket.on('message', function(msg) {
+//zmqSocket.on('message', function(msg) {
 //    console.log('tweets bru!!');
 //            sockets.emit('stream', {data : msg.toString()});
 
 //        socket.volatile.emit('stream', {data : msg.toString()});
 
         // an event sent to all connected clients
-        io.sockets.emit(msg.toString());
-
-});
+//        if (io.sockets !== undefined) {
+//            io.sockets.emit(msg.toString());
+//        }
+//
+//});
 
 
