@@ -11,16 +11,10 @@ app.listen(443);
 
 
 io.sockets.on('connection', function (socket) {
-
-    zmqSocket.on('message', function(msg) {
-        socket.volatile.emit('stream', {data : msg.toString()});
-    });
-
-    socket.volatile.emit('news', {hello : 'you are connected'});
-//
-//    socket.on('my other event', function (data) {
-//      console.log(data);
-//    });
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
 
 
