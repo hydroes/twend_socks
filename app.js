@@ -30,10 +30,12 @@ io.sockets.on('connection', function (socket) {
 });
 
 function getTweets() {
-
+    zmqSocket.on('message', function(msg) {
+        console.log(msg.toString());
+    });
 }
 
-//zmqSocket.on('message', function(msg) {
+zmqSocket.on('message', function(msg) {
 //    console.log('tweets bru!!');
 //            sockets.emit('stream', {data : msg.toString()});
 
