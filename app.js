@@ -30,7 +30,7 @@ io.sockets.on('connection', function (socket) {
 function getTweets(socket) {
     zmqSocket.on('message', function(msg) {
         console.log(msg.toString());
-        socket.volatile.emit('tweet', 'tweet');
+        socket.volatile.emit('tweet', msg.toString());
     });
 }
 
