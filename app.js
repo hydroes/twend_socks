@@ -29,7 +29,7 @@ zmqSocket.on('message', function(msg) {
     if (sockets.length !== 0) {
         for (i = 0; i < sockets.length; i++) {
             var sock = sockets[i];
-//            console.log(sock)
+            console.log(sock.id)
 //            sock.volatile.emit('tweet', msg.toString());
         }
     }
