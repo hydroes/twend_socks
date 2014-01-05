@@ -15,13 +15,16 @@ io.sockets.on('connection', function (socket) {
     sockets.push(socket);
 
     socket.on('disconnect', function () {
-        console.log('disconected' + socket.id);
+        console.log('disconected: ' + socket.id);
         io.sockets.emit('user disconnected');
+
+        sockets.splice(sockets.indexOf(socket), 1);
 
     });
 
-    socket.on('error', function (socket) {
+    socket.on('error', function () {
         io.sockets.emit('an error occurred');
+        sockets.splice(sockets.indexOf(socket), 1);
     });
 });
 
@@ -29,9 +32,8 @@ zmqSocket.on('message', function(msg) {
     if (sockets.length !== 0) {
         for (i = 0; i < sockets.length; i++) {
             var sock = sockets[i];
-//            console.log(sock.connected)
-//            sock.volatile.emit('tweet', msg.toString());
+            sock.volatile.emit('tweet', msg.toString());
         }
     }
-//    console.log(sockets.length)
+    console.log(sockets.length)
 });
