@@ -18,12 +18,14 @@ io.sockets.on('connection', function (socket) {
         console.log('disconected: ' + socket.id);
         io.sockets.emit('user disconnected');
 
+        // remove socket from array
         sockets.splice(sockets.indexOf(socket), 1);
 
     });
 
     socket.on('error', function () {
         io.sockets.emit('an error occurred');
+        // remove socket from array
         sockets.splice(sockets.indexOf(socket), 1);
     });
 });
