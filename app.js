@@ -14,7 +14,13 @@ io.sockets.on('connection', function (socket) {
     // store socket for later use
     sockets.push(socket);
 
-    socket.on('disconnect', function () {
+    socket.on('disconnect', function (socket) {
+
+        io.sockets.emit('user disconnected');
+        console.log(socket);
+    });
+
+    socket.on('error', function () {
         io.sockets.emit('user disconnected');
     });
 });
