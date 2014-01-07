@@ -43,7 +43,10 @@ zmqSocket.on('message', function(msg) {
 
 // periodically send message count
 var counterUpdate = setInterval(function() {
-    if (sockets.length !== 0) {
-        sockets[i].volatile.emit('tweetCount', message_count);
+    for (i = 0; i < sockets.length; i++)
+    {
+        if (sockets.length !== 0) {
+            sockets[i].volatile.emit('tweetCount', message_count);
+        }
     }
 }, 3000);
