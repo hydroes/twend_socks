@@ -29,12 +29,19 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+var message_count = 0;
 zmqSocket.on('message', function(msg) {
     if (sockets.length !== 0) {
         for (i = 0; i < sockets.length; i++) {
             var sock = sockets[i];
             sock.volatile.emit('tweet', msg.toString());
+
+            // send message count every X message
+            if (message_count % 10 === 0) {
+                sock.volatile.emit('tweetCount', message_count);
+            }
         }
     }
+    message_count++;
     // console.log(sockets.length)
 });
