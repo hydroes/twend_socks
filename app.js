@@ -22,9 +22,9 @@ io.sockets.on('connection', function (socket) {
 var message_count = 0;
 zmqSocket.on('message', function(msg)
 {
-    for (var socket in io.sockets.sockets)
+    for (var socketId in io.sockets.sockets)
     {
-        socket.volatile.emit('tweet', msg.toString());
+        io.sockets.sockets[socketId].volatile.emit('tweet', msg.toString());
     }
 
     message_count++;
@@ -33,8 +33,8 @@ zmqSocket.on('message', function(msg)
 
 // periodically send message count
 var counterUpdate = setInterval(function() {
-    for (var socket in io.sockets.sockets)
+    for (var socketId in io.sockets.sockets)
     {
-        socket.volatile.emit('tweetCount', message_count);
+        io.sockets.sockets[socketId].volatile.emit('tweetCount', message_count);
     }
 }, 650);
