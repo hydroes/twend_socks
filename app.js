@@ -30,13 +30,13 @@ io.sockets.on('connection', function (socket) {
 });
 
 var message_count = 0;
-zmqSocket.on('message', function(msg) {
-    if (sockets.length !== 0) {
-        for (i = 0; i < sockets.length; i++)
-        {
-            sockets[i].volatile.emit('tweet', msg.toString());
-        }
+zmqSocket.on('message', function(msg)
+{
+    for (var socket in io.sockets.sockets)
+    {
+        socket.volatile.emit('tweet', msg.toString());
     }
+
     message_count++;
     // console.log(sockets.length)
 });
@@ -49,4 +49,4 @@ var counterUpdate = setInterval(function() {
             sockets[i].volatile.emit('tweetCount', message_count);
         }
     }
-}, 3000);
+}, 650);
