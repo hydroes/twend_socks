@@ -10,7 +10,9 @@ var zmqSocket = zmq.socket('pull');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
-
+    // default flow
+    socket.set('feed-flow', true);
+    
     socket.on('disconnect', function () {
         console.log('user disconnected');
     });
@@ -21,7 +23,7 @@ io.sockets.on('connection', function (socket) {
     
     // pause feed for individual users
     socket.on('feed-flow', function (data) {
-        console.log(data.paused);
+        socket.set('feed-flow', data.paused);
     });
 });
 
@@ -38,6 +40,9 @@ zmqSocket.on('message', function(msg)
 
     for (var socketId in io.sockets.sockets)
     {
+        if (io.sockets.sockets[socketId].get('feed-flow') === false) {
+            continue;
+        }
         io.sockets.sockets[socketId].volatile.emit('tweet', tweet);
     }
 
