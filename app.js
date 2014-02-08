@@ -18,6 +18,11 @@ io.sockets.on('connection', function (socket) {
     socket.on('error', function () {
         console.log('an error occurred');
     });
+    
+    // pause feed for individual users
+    socket.on('feed-flow', function (data) {
+        console.log(data);
+    });
 });
 
 var message_count = 0;
