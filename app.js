@@ -40,7 +40,10 @@ zmqSocket.on('message', function(msg)
 
     for (var socketId in io.sockets.sockets)
     {
-        if (io.sockets.sockets[socketId].get('feed-flow') === false) {
+        var feed_paused = io.sockets.sockets[socketId].get('nickname', function (err, name) {
+            console.log('Chat message by ', name);
+        });
+        if (feed_paused === false) {
             continue;
         }
         io.sockets.sockets[socketId].volatile.emit('tweet', tweet);
