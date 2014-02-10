@@ -6,6 +6,12 @@ var app = require('http').createServer(),
 
 app.listen(443);
 
+// sets the log level of socket.io, with
+// log level 2 we wont see all the heartbits
+// of each socket but only the handshakes and
+// disconnections
+io.set('log level', 2);
+
 var zmqSocket = zmq.socket('pull');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
@@ -43,7 +49,7 @@ zmqSocket.on('message', function(msg)
         var feed_paused = io.sockets.sockets[socketId].get('nickname', function (err, name) {
             console.log('Chat message by ', name);
         });
-        console.log(feed_paused);
+        console.log('feedpaused' + feed_paused);
         if (feed_paused === false) {
             continue;
         }
