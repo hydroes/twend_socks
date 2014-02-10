@@ -49,7 +49,7 @@ zmqSocket.on('message', function(msg)
 
     for (var socketId in io.sockets.sockets)
     {
-        var feed_paused = io.sockets.sockets[socketId].get('nickname', function (err, name) {
+        var feed_paused = io.sockets.sockets[socketId].get('feed-flow', function (err, name) {
             console.log('Chat message by ', name);
         });
         console.log('feedpaused' + feed_paused);
