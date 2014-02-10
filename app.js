@@ -32,7 +32,7 @@ io.sockets.on('connection', function (socket) {
         console.log('feed-flow:triggered: ');
         console.log(data);
         
-        socket.set('feed-flow', data.paused, function(){});
+        socket.set('feed_flow_status', data.paused, function(){});
     });
 });
 
@@ -49,7 +49,7 @@ zmqSocket.on('message', function(msg)
 
     for (var socketId in io.sockets.sockets)
     {
-        var feed_paused = io.sockets.sockets[socketId].get('feed-flow', function (err, name) {
+        var feed_paused = io.sockets.sockets[socketId].get('feed_flow_status', function (err, name) {
             console.log('Chat message by ', name);
         });
         console.log('feedpaused:');
