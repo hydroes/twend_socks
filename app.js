@@ -52,7 +52,8 @@ zmqSocket.on('message', function(msg)
         var feed_paused = io.sockets.sockets[socketId].get('feed-flow', function (err, name) {
             console.log('Chat message by ', name);
         });
-        console.log('feedpaused' + feed_paused);
+        console.log('feedpaused:');
+        console.log(feed_paused);
         if (feed_paused === false) {
             continue;
         }
