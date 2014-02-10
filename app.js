@@ -29,7 +29,7 @@ io.sockets.on('connection', function (socket) {
     
     // pause feed for individual users
     socket.on('feed-flow', function (data) {
-        console.log('feed-flow');
+        console.log('feed-flow:triggered: ' + data);
         socket.set('feed-flow', data.paused, function(){});
     });
 });
