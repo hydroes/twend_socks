@@ -17,7 +17,7 @@ zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
     // default flow
-    socket.set('feed_flow_status', true, function(){});
+    socket.set('feed_paused', false, function(){});
     
     socket.on('disconnect', function () {
         console.log('user disconnected');
@@ -32,7 +32,7 @@ io.sockets.on('connection', function (socket) {
         console.log('feed-flow:triggered: ');
         console.log(data);
         
-        socket.set('feed_flow_status', data.paused, function(){});
+        socket.set('feed_paused', data.paused, function(){});
     });
 });
 
@@ -50,14 +50,14 @@ zmqSocket.on('message', function(msg)
     for (var socketId in io.sockets.sockets)
     {
         var feed_paused = null;
-        io.sockets.sockets[socketId].get('feed_flow_status', function (err, name) {
-            feed_paused = name;
+        io.sockets.sockets[socketId].get('feed_paused', function (err, status) {
+            feed_paused = status;
             if (err !== null) {
                 console.log(err);
             }
         });
         
-        if (feed_paused === false) {
+        if (feed_paused === true) {
             continue;
         }
         io.sockets.sockets[socketId].volatile.emit('tweet', tweet);
