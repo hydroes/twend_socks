@@ -52,7 +52,9 @@ zmqSocket.on('message', function(msg)
         var feed_paused = null;
         io.sockets.sockets[socketId].get('feed_flow_status', function (err, name) {
             feed_paused = name;
-            console.log(err);
+            if (err !== null) {
+                console.log(err);
+            }
         });
         
         if (feed_paused === false) {
