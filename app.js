@@ -17,7 +17,7 @@ zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
     // default flow
-    socket.set('feed-flow', true, function(){});
+    socket.set('feed_flow_status', true, function(){});
     
     socket.on('disconnect', function () {
         console.log('user disconnected');
