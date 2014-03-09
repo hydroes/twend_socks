@@ -12,7 +12,7 @@ app.listen(443);
 // disconnections
 io.set('log level', 0);
 
-var zmqSocket = zmq.socket('sub');
+var zmqSocket = zmq.socket('pull');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
