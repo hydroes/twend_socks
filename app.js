@@ -10,9 +10,9 @@ app.listen(443);
 // log level 2 we wont see all the heartbits
 // of each socket but only the handshakes and
 // disconnections
-io.set('log level', 2);
+io.set('log level', 0);
 
-var zmqSocket = zmq.socket('pull');
+var zmqSocket = zmq.socket('sub');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
