@@ -37,7 +37,7 @@ var message_count = 0;
 
 var zmqSocket = zmq.socket('sub');
 zmqSocket.connect('tcp://127.0.0.1:3000');
-subscriber.subscribe('microTweets');
+zmqSocket.subscribe('microTweets');
 
 zmqSocket.on('message', function(msg)
 {
