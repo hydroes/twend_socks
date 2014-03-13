@@ -2,7 +2,7 @@ var app = require('http').createServer(),
     io = require('socket.io').listen(app),
     fs = require('fs'),
     twitter = require('twitter-text'),
-    zmq = require("zmq");
+    zmq = require('zmq');
 
 app.listen(443);
 
@@ -11,9 +11,6 @@ app.listen(443);
 // of each socket but only the handshakes and
 // disconnections
 io.set('log level', 0);
-
-var zmqSocket = zmq.socket('pull');
-zmqSocket.connect('tcp://127.0.0.1:3000');
 
 io.sockets.on('connection', function (socket) {
     // default flow
@@ -37,6 +34,11 @@ io.sockets.on('connection', function (socket) {
 });
 
 var message_count = 0;
+
+var zmqSocket = zmq.socket('sub');
+zmqSocket.connect('tcp://127.0.0.1:3000');
+subscriber.subscribe('microTweets');
+
 zmqSocket.on('message', function(msg)
 {
     // autolink tweet usernames, urls and hashtags
@@ -66,6 +68,12 @@ zmqSocket.on('message', function(msg)
     message_count++;
     // console.log(sockets.length)
 });
+
+// close socket on publisher termination
+process.on('SIGINT', function() {
+  subscriber.close()
+  console.log('\nClosed')
+})
 
 // periodically send message count
 var counterUpdate = setInterval(function() {
