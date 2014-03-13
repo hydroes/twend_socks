@@ -41,6 +41,11 @@ zmqSocket.subscribe('microTweets');
 
 zmqSocket.on('message', function(msg)
 {
+    
+    console.log('\n msg')
+    console.log(msg)
+    
+    return;
     // autolink tweet usernames, urls and hashtags
     var tweet = JSON.parse(msg.toString());
     var tweetString = twitter.autoLink(tweet.text, {
