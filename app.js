@@ -70,10 +70,10 @@ zmqSocket.on('message', function(msg)
 });
 
 // close socket on publisher termination
-process.on('SIGINT', function() {
-  zmqSocket.close()
-  console.log('\nClosed')
-})
+//process.on('SIGINT', function() {
+//  zmqSocket.close()
+//  console.log('\nClosed')
+//});
 
 // periodically send message count
 var counterUpdate = setInterval(function() {
