@@ -71,7 +71,7 @@ zmqSocket.on('message', function(msg)
 
 // close socket on publisher termination
 process.on('SIGINT', function() {
-  subscriber.close()
+  zmqSocket.close()
   console.log('\nClosed')
 })
 
