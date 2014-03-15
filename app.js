@@ -39,15 +39,15 @@ var zmqSocket = zmq.socket('sub');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 zmqSocket.subscribe('microTweets');
 
-zmqSocket.on('message', function(msg)
+zmqSocket.on('message', function(address, message)
 {
+    // all parts of a message come as function arguments
+//    var args = Array.apply(null, arguments);
+//    var address = args[0];
+//    var message = args[1];
     
-    console.log('\n msg')
-    console.log(msg.toString('utf8'))
-    
-    return;
     // autolink tweet usernames, urls and hashtags
-    var tweet = JSON.parse(msg.toString());
+    var tweet = JSON.parse(message.toString());
     var tweetString = twitter.autoLink(tweet.text, {
         urlEntities: [tweet.urlEntities]
     });
