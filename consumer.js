@@ -19,7 +19,7 @@ subscriber.on("message", function(reply) {
 })
 
 subscriber.connect("tcp://localhost:6000")
-subscriber.subscribe("")
+subscriber.subscribe("B")
 
 process.on('SIGINT', function() {
   subscriber.close()
