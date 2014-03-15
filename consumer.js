@@ -5,7 +5,7 @@ subscriber.on("message", function(reply) {
 //var msg = reply.toString('hex');
 //console.log(reply)
 
-//console.log(reply.toString());
+console.log(reply.toString());
 //console.log(reply.toJSON())
   console.log('Received message: ', reply);
 })
