@@ -10,7 +10,7 @@ subscriber.on("message", function(reply) {
 //    console.log(args);
     
     for (var i =0; i < args.length; i++) {
-        console.log(args[i])
+        console.log(args[i].toString())
     }
 
 //console.log(reply.toString());
