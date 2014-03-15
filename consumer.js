@@ -6,8 +6,8 @@ subscriber.on("message", function(reply) {
 //console.log(reply)
 
 //console.log(reply.toString());
-console.log(reply.toJSON())
-//  console.log('Received message: ', reply);
+//console.log(reply.toJSON())
+  console.log('Received message: ', reply);
 })
 
 subscriber.connect("tcp://localhost:3000")
