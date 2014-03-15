@@ -43,7 +43,7 @@ zmqSocket.on('message', function(msg)
 {
     
     console.log('\n msg')
-    console.log(msg)
+    console.log(msg.toString('utf8'))
     
     return;
     // autolink tweet usernames, urls and hashtags

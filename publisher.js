@@ -1,11 +1,11 @@
 var zmq = require('zmq')
 var publisher = zmq.socket('pub')
 
-publisher.bind('tcp://*:8688', function(err) {
+publisher.bind('tcp://*:6000', function(err) {
   if(err)
     console.log(err)
   else
-    console.log("Listening on 8688...")
+    console.log("Listening on 6000...")
 })
 
 
