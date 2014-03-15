@@ -39,14 +39,13 @@ var zmqSocket = zmq.socket('sub');
 zmqSocket.connect('tcp://127.0.0.1:3000');
 zmqSocket.subscribe('microTweets');
 
+// all parts of a message come as function arguments
 zmqSocket.on('message', function(address, message)
 {
     // all parts of a message come as function arguments
 //    var args = Array.apply(null, arguments);
 //    var address = args[0];
 //    var message = args[1];
-//console.log(message)
-//    return;
     
     // autolink tweet usernames, urls and hashtags
     var tweet = JSON.parse(message.toString());
@@ -77,10 +76,10 @@ zmqSocket.on('message', function(address, message)
 });
 
 // close socket on publisher termination
-//process.on('SIGINT', function() {
-//  zmqSocket.close()
-//  console.log('\nClosed')
-//});
+process.on('SIGINT', function() {
+  zmqSocket.close()
+  console.log('\nClosed')
+});
 
 // periodically send message count
 var counterUpdate = setInterval(function() {
