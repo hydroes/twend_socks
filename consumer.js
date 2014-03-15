@@ -7,11 +7,15 @@ subscriber.on("message", function(reply) {
 
     // all parts of a message come as function arguments
     var args = Array.apply(null, arguments);
-    console.log(args);
+//    console.log(args);
+    
+    for (var i =0; i < args.length; i++) {
+        console.log(args[i])
+    }
 
 //console.log(reply.toString());
 //console.log(reply.toJSON())
-  console.log('Received message: ', reply);
+//  console.log('Received message: ', reply);
 })
 
 subscriber.connect("tcp://localhost:6000")
