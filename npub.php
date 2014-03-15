@@ -7,7 +7,7 @@
 //  Prepare our context and publisher
 $context = new ZMQContext();
 $publisher = new ZMQSocket($context, ZMQ::SOCKET_PUB);
-$publisher->bind("tcp://localhost:6000");
+$publisher->bind("tcp://127.0.0.1:6000");
 
 while (true) {
     //  Write two messages, each with an envelope and content
