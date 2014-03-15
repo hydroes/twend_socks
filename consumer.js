@@ -10,7 +10,7 @@ subscriber.on("message", function(reply) {
   console.log('Received message: ', reply);
 })
 
-subscriber.connect("tcp://localhost:3000")
+subscriber.connect("tcp://localhost:6000")
 subscriber.subscribe("")
 
 process.on('SIGINT', function() {
