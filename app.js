@@ -45,8 +45,8 @@ zmqSocket.on('message', function(address, message)
 //    var args = Array.apply(null, arguments);
 //    var address = args[0];
 //    var message = args[1];
-console.log(message)
-    return;
+//console.log(message)
+//    return;
     
     // autolink tweet usernames, urls and hashtags
     var tweet = JSON.parse(message.toString());
