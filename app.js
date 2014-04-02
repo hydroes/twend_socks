@@ -17,19 +17,16 @@ io.sockets.on('connection', function (socket) {
     // default flow
     socket.set('feed_paused', false, function(){});
 
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
-    });
+    socket.on('disconnect', function(){});
 
-    socket.on('error', function () {
+    socket.on('error', function ()
+    {
         console.log('an error occurred');
     });
 
     // pause feed for individual users
-    socket.on('feed-flow', function (data) {
-        console.log('feed-flow:triggered: ');
-        console.log(data);
-
+    socket.on('feed-flow', function (data)
+    {
         socket.set('feed_paused', data.paused, function(){});
     });
 });
@@ -78,8 +75,8 @@ zmqSocket.on('message', function(address, message)
 
 // close socket on publisher termination
 process.on('SIGINT', function() {
-  zmqSocket.close()
-  console.log('\nClosed')
+  zmqSocket.close();
+  console.log('\nClosed');
 });
 
 // periodically send message count
