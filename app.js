@@ -1,3 +1,4 @@
+// redis lib: https://www.npmjs.org/package/node-redis
 var app = require('http').createServer(),
     io = require('socket.io').listen(app),
     fs = require('fs'),
@@ -41,9 +42,9 @@ zmqSocket.subscribe('microTweets');
 zmqSocket.on('message', function(address, message)
 {
     // all parts of a message come as function arguments
-//    var args = Array.apply(null, arguments);
-//    var address = args[0];
-//    var message = args[1];
+    // var args = Array.apply(null, arguments);
+    // var address = args[0];
+    // var message = args[1];
 
     // autolink tweet usernames, urls and hashtags
     var tweet = JSON.parse(message.toString());
@@ -56,14 +57,16 @@ zmqSocket.on('message', function(address, message)
     for (var socketId in io.sockets.sockets)
     {
         var feed_paused = null;
-        io.sockets.sockets[socketId].get('feed_paused', function (err, status) {
+        io.sockets.sockets[socketId].get('feed_paused', function (err, status)
+        {
             feed_paused = status;
             if (err !== null) {
                 console.log(err);
             }
         });
 
-        if (feed_paused === true) {
+        if (feed_paused === true)
+        {
             continue;
         }
         io.sockets.sockets[socketId].volatile.emit('tweet', tweet);
@@ -74,13 +77,15 @@ zmqSocket.on('message', function(address, message)
 });
 
 // close socket on publisher termination
-process.on('SIGINT', function() {
+process.on('SIGINT', function()
+{
   zmqSocket.close();
   console.log('\nClosed');
 });
 
 // periodically send message count
-var counterUpdate = setInterval(function() {
+var counterUpdate = setInterval(function()
+{
     for (var socketId in io.sockets.sockets)
     {
         io.sockets.sockets[socketId].volatile.emit('tweetCount', message_count);
