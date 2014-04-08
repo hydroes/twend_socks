@@ -91,3 +91,16 @@ var counterUpdate = setInterval(function()
         io.sockets.sockets[socketId].volatile.emit('tweetCount', message_count);
     }
 }, 1000);
+
+// periodically send graph data
+var graphData = {
+    foo: true,
+    bar: false
+}
+var graphUpdate = setInterval(function()
+{
+    for (var socketId in io.sockets.sockets)
+    {
+        io.sockets.sockets[socketId].volatile.emit('graphData', JSON.toString(graphData));
+    }
+}, 60000);
