@@ -90,4 +90,4 @@ var counterUpdate = setInterval(function()
     {
         io.sockets.sockets[socketId].volatile.emit('tweetCount', message_count);
     }
-}, 850);
+}, 1000);
