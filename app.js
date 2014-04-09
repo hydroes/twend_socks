@@ -93,12 +93,13 @@ var counterUpdate = setInterval(function()
 }, 1000);
 
 // periodically send graph data
-var graphData = {
-    foo: true,
-    bar: false
-}
+
 var graphUpdate = setInterval(function()
 {
+    var graphData = {
+        foo: true,
+        bar: false
+    }
     graphData = JSON.stringify(graphData);
     for (var socketId in io.sockets.sockets)
     {
