@@ -99,8 +99,9 @@ var graphData = {
 }
 var graphUpdate = setInterval(function()
 {
+    graphData = JSON.stringify(graphData);
     for (var socketId in io.sockets.sockets)
     {
-        io.sockets.sockets[socketId].volatile.emit('graphData', JSON.toString(graphData));
+        io.sockets.sockets[socketId].volatile.emit('graphData', graphData);
     }
 }, 60000);
