@@ -140,7 +140,7 @@ var getStatisticsDataPeriodic = setInterval(function()
 
     });
 
-}, 60000);
+}, 20000);
 
 
 var sendStatisticsData = setInterval(function()
