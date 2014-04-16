@@ -8,6 +8,9 @@ var app = require('http').createServer(),
 
 app.listen(443);
 
+// create redis client
+var redisClient = redis.createClient(6379);
+
 // sets the log level of socket.io, with
 // log level 2 we wont see all the heartbits
 // of each socket but only the handshakes and
@@ -105,4 +108,21 @@ var graphUpdate = setInterval(function()
     {
         io.sockets.sockets[socketId].volatile.emit('graphData', graphData);
     }
+}, 60000);
+
+var statsData = setInterval(function()
+{
+    redisClient.get('laravel:last_minute_total', function (error, key)
+    {
+        if (error !== null)
+        {
+            console.log("\nerror:" + error);
+        }
+
+        for (var socketId in io.sockets.sockets)
+        {
+            io.sockets.sockets[socketId].volatile.emit('statsData', key);
+        }
+
+    });
 }, 60000);
