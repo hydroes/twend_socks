@@ -114,7 +114,7 @@ var getStatisticsDataPeriodic = setInterval(function()
             console.log("\nerror:" + error);
         }
 
-        statsData.statusesPerMinute = value;
+        statsData.statusesPerMinute = parseInt(value, 10);
 
     });
 
@@ -125,7 +125,7 @@ var getStatisticsDataPeriodic = setInterval(function()
             console.log("\nerror:" + error);
         }
 
-        statsData.statusesPerHour = value;
+        statsData.statusesPerHour = parseInt(value, 10);;
 
     });
 
@@ -136,7 +136,7 @@ var getStatisticsDataPeriodic = setInterval(function()
             console.log("\nerror:" + error);
         }
 
-        statsData.statusesPerDay = value;
+        statsData.statusesPerDay = parseInt(value, 10);;
 
     });
 
