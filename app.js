@@ -102,7 +102,7 @@ var graphUpdate = setInterval(function()
     var graphData = {
         foo: true,
         bar: false
-    }
+    };
     graphData = JSON.stringify(graphData);
     for (var socketId in io.sockets.sockets)
     {
@@ -112,17 +112,52 @@ var graphUpdate = setInterval(function()
 
 var statsData = setInterval(function()
 {
-    redisClient.get('laravel:last_minute_total', function (error, key)
+    var statsData =
+    {
+        statusesPerMinute: 0,
+        statusesPerHour: 0,
+        statusesPerDay: 0
+    };
+
+    // TODO: refactor this to a loop
+    redisClient.get('laravel:last_minute_total', function (error, value)
     {
         if (error !== null)
         {
             console.log("\nerror:" + error);
         }
 
-        for (var socketId in io.sockets.sockets)
-        {
-            io.sockets.sockets[socketId].volatile.emit('statsData', key);
-        }
+        statsData.statusesPerMinute = value;
 
     });
+
+    redisClient.get('laravel:last_hour_total', function (error, value)
+    {
+        if (error !== null)
+        {
+            console.log("\nerror:" + error);
+        }
+
+        statsData.statusesPerHour = value;
+
+    });
+
+    redisClient.get('laravel:last_day_total', function (error, value)
+    {
+        if (error !== null)
+        {
+            console.log("\nerror:" + error);
+        }
+
+        statsData.statusesPerDay = value;
+
+    });
+
+    statsData = JSON.stringify(statsData);
+
+    for (var socketId in io.sockets.sockets)
+    {
+        io.sockets.sockets[socketId].volatile.emit('statsData', statsData);
+    }
+
 }, 60000);
