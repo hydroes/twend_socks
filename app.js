@@ -95,29 +95,16 @@ var counterUpdate = setInterval(function()
     }
 }, 1000);
 
-// periodically send graph data
-
-var graphUpdate = setInterval(function()
+// periodically get stats data
+var statsData =
 {
-    var graphData = {
-        foo: true,
-        bar: false
-    };
-    graphData = JSON.stringify(graphData);
-    for (var socketId in io.sockets.sockets)
-    {
-        io.sockets.sockets[socketId].volatile.emit('graphData', graphData);
-    }
-}, 60000);
+    statusesPerMinute: 0,
+    statusesPerHour: 0,
+    statusesPerDay: 0
+};
 
-var statsData = setInterval(function()
+var getStatisticsDataPeriodic = setInterval(function()
 {
-    var statsData =
-    {
-        statusesPerMinute: 0,
-        statusesPerHour: 0,
-        statusesPerDay: 0
-    };
 
     // TODO: refactor this to a loop
     redisClient.get('laravel:last_minute_total', function (error, value)
@@ -153,11 +140,14 @@ var statsData = setInterval(function()
 
     });
 
-    statsData = JSON.stringify(statsData);
+}, 60000);
 
+
+var sendStatisticsData = setInterval(function()
+{
+    statsData = JSON.stringify(statsData);
     for (var socketId in io.sockets.sockets)
     {
         io.sockets.sockets[socketId].volatile.emit('statsData', statsData);
     }
-
 }, 60000);
