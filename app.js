@@ -145,9 +145,8 @@ var getStatisticsDataPeriodic = setInterval(function()
 
 var sendStatisticsData = setInterval(function()
 {
-    statsData = JSON.stringify(statsData);
     for (var socketId in io.sockets.sockets)
     {
-        io.sockets.sockets[socketId].volatile.emit('statsData', statsData);
+        io.sockets.sockets[socketId].volatile.emit('statsData', JSON.stringify(statsData));
     }
 }, 60000);
