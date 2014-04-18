@@ -96,58 +96,44 @@ var counterUpdate = setInterval(function()
 }, 1000);
 
 // periodically get stats data
-var statsData =
+var statsCurrentData =
 {
-    statusesPerMinute: 0,
-    statusesPerHour: 0,
-    statusesPerDay: 0
+    minute: 0,
+    hour: 0,
+    day: 0
 };
 
 var getStatisticsDataPeriodic = setInterval(function()
 {
-
-    // TODO: refactor this to a loop
-    redisClient.get('laravel:last_minute_total', function (error, value)
+    periods = 
     {
-        if (error !== null)
-        {
-            console.log("\nerror:" + error);
-        }
-
-        statsData.statusesPerMinute = parseInt(value, 10);
-
-    });
-
-    redisClient.get('laravel:last_hour_total', function (error, value)
+        minute: 1,
+        hour: 60,
+        day: 1440
+    };
+    
+    for (period in periods)
     {
-        if (error !== null)
+        redisClient.get('laravel:last_'+period+'_total', function (error, value)
         {
-            console.log("\nerror:" + error);
-        }
+            if (error !== null)
+            {
+                console.log("\nerror:" + error);
+            }
 
-        statsData.statusesPerHour = parseInt(value, 10);
+            statsCurrentData.period = parseInt(value, 10);
 
-    });
-
-    redisClient.get('laravel:last_day_total', function (error, value)
-    {
-        if (error !== null)
-        {
-            console.log("\nerror:" + error);
-        }
-
-        statsData.statusesPerDay = parseInt(value, 10);
-
-    });
+        });
+    }
 
 }, 20000);
 
 
 var sendStatisticsData = setInterval(function()
 {
-    var jsonToSend = JSON.stringify(statsData);
+    var jsonToSend = JSON.stringify(statsCurrentData);
     for (var socketId in io.sockets.sockets)
     {
-        io.sockets.sockets[socketId].volatile.emit('statsData', jsonToSend);
+        io.sockets.sockets[socketId].volatile.emit('statsCurrentData', jsonToSend);
     }
 }, 60000);
