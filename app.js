@@ -105,29 +105,39 @@ var statsCurrentData =
 
 var getStatisticsDataPeriodic = setInterval(function()
 {
-    var periods = 
+    redisClient.get('laravel:last_minute_total', function (error, value)
     {
-        minute: 1,
-        hour: 60,
-        day: 1440
-    };
-    
-    for (var period in periods)
-    {
-        glob_period = period;
-        redisClient.get('laravel:last_'+period+'_total', function (error, value)
+        if (error !== null)
         {
-            if (error !== null)
-            {
-                console.log("\nerror:" + error);
-            }
+            console.log("\nerror:" + error);
+        }
 
-            statsCurrentData[period] = parseInt(value, 10);
-            console.log("\nperiod:" + glob_period)
-            console.log(statsCurrentData[glob_period])
+        statsCurrentData.minute = parseInt(value, 10);
 
-        });
-    }
+    });
+    
+    redisClient.get('laravel:last_hour_total', function (error, value)
+    {
+        if (error !== null)
+        {
+            console.log("\nerror:" + error);
+        }
+
+        statsCurrentData.hour = parseInt(value, 10);
+
+    });
+    
+    redisClient.get('laravel:last_day_total', function (error, value)
+    {
+        if (error !== null)
+        {
+            console.log("\nerror:" + error);
+        }
+
+        statsCurrentData.day = parseInt(value, 10);
+
+    });
+    
 
 }, 20000);
 
