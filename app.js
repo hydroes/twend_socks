@@ -112,7 +112,7 @@ var getStatisticsDataPeriodic = setInterval(function()
         day: 1440
     };
     
-    for (period in periods)
+    for (var period in periods)
     {
         redisClient.get('laravel:last_'+period+'_total', function (error, value, period)
         {
