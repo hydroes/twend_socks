@@ -114,7 +114,8 @@ var getStatisticsDataPeriodic = setInterval(function()
     
     for (period in periods)
     {
-        redisClient.get('laravel:last_'+period+'_total', function (error, value)
+        var literal = new String(period);
+        redisClient.get('laravel:last_'+literal+'_total', function (error, value)
         {
             if (error !== null)
             {
