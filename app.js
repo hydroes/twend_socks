@@ -105,7 +105,7 @@ var statsCurrentData =
 
 var getStatisticsDataPeriodic = setInterval(function()
 {
-    periods = 
+    var periods = 
     {
         minute: 1,
         hour: 60,
