@@ -121,7 +121,7 @@ var getStatisticsDataPeriodic = setInterval(function()
                 console.log("\nerror:" + error);
             }
 
-            statsCurrentData.period = parseInt(value, 10);
+            statsCurrentData[period] = parseInt(value, 10);
 
         });
     }
