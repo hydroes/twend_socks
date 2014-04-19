@@ -17,6 +17,14 @@ var redisClient = redis.createClient(6379);
 // disconnections
 io.set('log level', 0);
 
+// periodically get stats data
+var statsCurrentData =
+{
+    minute: 0,
+    hour: 0,
+    day: 0
+};
+
 io.sockets.on('connection', function (socket) {
     // default flow
     socket.set('feed_paused', false, function(){});
@@ -33,6 +41,16 @@ io.sockets.on('connection', function (socket) {
     {
         socket.set('feed_paused', data.paused, function(){});
     });
+    
+    socket.on('get-current-stats-data', function()
+    {
+        var jsonToSend = JSON.stringify(statsCurrentData);
+        for (var socketId in io.sockets.sockets)
+        {
+            io.sockets.sockets[socketId].volatile.emit('statsCurrentData', jsonToSend);
+        }
+    });
+    
 });
 
 var message_count = 0;
@@ -95,14 +113,6 @@ var counterUpdate = setInterval(function()
     }
 }, 1000);
 
-// periodically get stats data
-var statsCurrentData =
-{
-    minute: 0,
-    hour: 0,
-    day: 0
-};
-
 var getStatisticsDataPeriodic = setInterval(function()
 {
     redisClient.get('laravel:last_minute_total', function (error, value)
@@ -141,12 +151,3 @@ var getStatisticsDataPeriodic = setInterval(function()
 
 }, 20000);
 
-
-var sendStatisticsData = setInterval(function()
-{
-    var jsonToSend = JSON.stringify(statsCurrentData);
-    for (var socketId in io.sockets.sockets)
-    {
-        io.sockets.sockets[socketId].volatile.emit('statsCurrentData', jsonToSend);
-    }
-}, 60000);
