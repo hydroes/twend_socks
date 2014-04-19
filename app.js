@@ -28,6 +28,8 @@ var statsCurrentData =
 io.sockets.on('connection', function (socket) {
     // default flow
     socket.set('feed_paused', false, function(){});
+    
+    socket.emit('init', {connected: true});
 
     socket.on('disconnect', function(){});
 
