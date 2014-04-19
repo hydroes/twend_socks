@@ -25,6 +25,8 @@ var statsCurrentData =
     day: 0
 };
 
+getCurrentStats();
+
 io.sockets.on('connection', function (socket) {
     // default flow
     socket.set('feed_paused', false, function(){});
@@ -115,7 +117,7 @@ var counterUpdate = setInterval(function()
     }
 }, 1000);
 
-var getStatisticsDataPeriodic = setInterval(function()
+function getCurrentStats()
 {
     redisClient.get('laravel:last_minute_total', function (error, value)
     {
@@ -149,7 +151,11 @@ var getStatisticsDataPeriodic = setInterval(function()
         statsCurrentData.day = parseInt(value, 10);
 
     });
-    
+}
+
+var getStatisticsDataPeriodic = setInterval(function()
+{
+    getCurrentStats();
 
 }, 20000);
 
