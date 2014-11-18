@@ -108,15 +108,6 @@ process.on('SIGINT', function()
   console.log('\nClosed');
 });
 
-// periodically send message count
-var counterUpdate = setInterval(function()
-{
-    for (var socketId in io.sockets.sockets)
-    {
-        io.sockets.sockets[socketId].volatile.emit('tweetCount', message_count);
-    }
-}, 1000);
-
 function getCurrentStats()
 {
     redisClient.get('laravel:last_minute_total', function (error, value)
