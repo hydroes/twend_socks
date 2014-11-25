@@ -28,7 +28,7 @@ module.exports = function(redisClient) {
                 {
                     console.log("\n stats error:" + error);
                 }
-
+console.log("\n range:" + value);
                 dataForRange.push = parseInt(value);
 
             });
