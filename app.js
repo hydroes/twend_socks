@@ -10,6 +10,7 @@ app.listen(443);
 
 // create redis client
 var redisClient = redis.createClient(6379);
+var stats = require('./libs/stats')(redisClient);
 
 // sets the log level of socket.io, with
 // log level 2 we wont see all the heartbits
