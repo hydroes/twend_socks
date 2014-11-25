@@ -34,6 +34,14 @@ io.sockets.on('connection', function (socket) {
     socket.set('feed_paused', false, function(){});
     
     socket.emit('init', {connected: true});
+    
+    socket.emit('stats-for-last', function ()
+    {
+        var startDate = moment();
+        var endDate = startDate.subtract(1, 'days');
+        var last_day_love = stats.getByNamePeriod('love', startDate, endDate, 'minutes');
+        socket.emit('stats-for-last', JSON.stringify(last_day_love));
+    });
 
     socket.on('disconnect', function(){});
 
@@ -42,14 +50,6 @@ io.sockets.on('connection', function (socket) {
         console.log('an error occurred');
     });
     
-    socket.on('stats-for-last', function ()
-    {
-        var startDate = moment();
-        var endDate = startDate.subtract(1, 'days');
-        var last_day_love = stats.getByNamePeriod('love', startDate, endDate, 'minutes');
-        socket.emit('stats-for-last', JSON.stringify(last_day_love));
-    });
-
     // pause feed for individual users
     socket.on('feed-flow', function (data)
     {
