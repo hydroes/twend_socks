@@ -4,6 +4,7 @@ var app = require('http').createServer(),
     fs = require('fs'),
     twitter = require('twitter-text'),
     redis = require('node-redis'),
+    moment = require('moment'),
     zmq = require('zmq');
 
 app.listen(443);
@@ -39,6 +40,14 @@ io.sockets.on('connection', function (socket) {
     socket.on('error', function ()
     {
         console.log('an error occurred');
+    });
+    
+    socket.on('stats-for-last', function ()
+    {
+        var startDate = moment();
+        var endDate = startDate.subtract(1, 'days');
+        var last_day_love = stats.getByNamePeriod('love', startDate, endDate, 'minutes');
+        socket.emit('stats-for-last', JSON.stringify(last_day_love));
     });
 
     // pause feed for individual users
