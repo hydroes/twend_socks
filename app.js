@@ -39,6 +39,7 @@ io.sockets.on('connection', function (socket) {
     {
         var startDate = moment();
         var endDate = startDate.subtract(1, 'days');
+        console.log("\n startDate:", startDate);  
         var last_day_love = stats.getByNamePeriod('love', startDate, endDate, 'minutes');
         socket.emit('stats-for-last', JSON.stringify(last_day_love));
     });
