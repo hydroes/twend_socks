@@ -12,7 +12,7 @@ module.exports = function(redisClient) {
      */
     stats.getByNamePeriod = function(counterName, fromDate, toDate, interval) 
     {
-        
+     console.log("\n got range range:");   
         var dataForRange = [];
         
         // create a date range eg
