@@ -1,3 +1,5 @@
+console.log('stats-for-last')
+
 // redis lib: https://www.npmjs.org/package/node-redis
 var app = require('http').createServer(),
     io = require('socket.io').listen(app),
