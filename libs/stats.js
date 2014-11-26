@@ -31,7 +31,7 @@ module.exports = function(redisClient) {
 //console.log("\n range:" + value, " - ", moment.format());
                 dataForRange.push = parseInt(value);
                 
-                if (moment === toDate) {
+                if (moment.format() === toDate.format()) {
                     console.log("\n WHOOOPIE")
                 }
 
