@@ -19,7 +19,7 @@ var stats = require('./libs/stats')(redisClient);
 // log level 2 we wont see all the heartbits
 // of each socket but only the handshakes and
 // disconnections
-io.set('log level', 1);
+io.set('log level', 2);
 
 // periodically get stats data
 var statsCurrentData =
