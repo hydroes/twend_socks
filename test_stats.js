@@ -9,6 +9,6 @@ var stats = require('./libs/stats')(redisClient);
 var startDate = moment();
 var endDate = startDate.subtract(1, 'days');
 console.log("\n startDate:", startDate);  
-var last_day_love = stats.getByNamePeriod('total', startDate, endDate, 'minutes');
+var last_day_love = stats.getByNamePeriod('total', startDate, endDate, 'minute');
 
 console.log("\n data:", last_day_love);  
