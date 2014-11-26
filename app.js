@@ -1,5 +1,3 @@
-console.log('stats-for-last')
-
 // redis lib: https://www.npmjs.org/package/node-redis
 var app = require('http').createServer(),
     io = require('socket.io').listen(app),
@@ -19,7 +17,7 @@ var stats = require('./libs/stats')(redisClient);
 // log level 2 we wont see all the heartbits
 // of each socket but only the handshakes and
 // disconnections
-io.set('log level', 2);
+io.set('log level', 0);
 
 // periodically get stats data
 var statsCurrentData =
@@ -39,7 +37,6 @@ io.sockets.on('connection', function (socket) {
     
     socket.emit('stats-for-last', function ()
     {
-        console.log('stats-for-last')
         var startDate = moment();
         var endDate = startDate.subtract(1, 'days');
         console.log("\n startDate:", startDate);  
