@@ -1,7 +1,10 @@
+
+var moment = require('moment'),
+    moment_range = require('moment-range');
+
 module.exports = function(redisClient) {
     var stats = {};
     var key_prefix = 'laravel:';
-    var moment = require('moment');
     
     /**
      * builds counter json for a specific counter type for a given date range
