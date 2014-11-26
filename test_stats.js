@@ -6,8 +6,8 @@ var redis = require('node-redis'),
 var redisClient = redis.createClient(6379);
 var stats = require('./libs/stats')(redisClient);
 
-var startDate = moment();
-var endDate = moment(startDate).subtract(1, 'day');
+var startDate = moment().subtract(1, 'day');
+var endDate = moment();
 console.log("\n startDate, endDate:", startDate.format(), endDate.format());  
 var last_day_love = stats.getByNamePeriod('total', startDate, endDate, 'minute');
 
