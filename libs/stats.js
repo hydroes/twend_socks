@@ -29,7 +29,7 @@ module.exports = function(redisClient) {
                 {
                     console.log("\n stats error:" + error);
                 }
-console.log("\n range:" + value);
+console.log("\n range:" + value, " - ", moment.format());
                 dataForRange.push = parseInt(value);
 
             });
