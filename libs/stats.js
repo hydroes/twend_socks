@@ -1,6 +1,7 @@
 
 var moment = require('moment'),
-    moment_range = require('moment-range');
+    moment_range = require('moment-range'),
+    Q = require("q");;
 
 module.exports = function(redisClient) {
     var stats = {};
@@ -14,6 +15,7 @@ module.exports = function(redisClient) {
     stats.getByNamePeriod = function(counterName, fromDate, toDate, interval) 
     {
         var dataForRange = [];
+        var deferred = Q.defer();
         
         // create a date range eg
         var range = moment().range(fromDate, toDate);
@@ -32,14 +34,15 @@ module.exports = function(redisClient) {
                 dataForRange.push = parseInt(value);
                 
                 if (moment.format() === toDate.format()) {
-                    console.log("\n WHOOOPIE")
+                    // todo return promise
+                    deferred.resolve(dataForRange); 
                 }
 
             });
         });
         
         
-        return dataForRange;
+        return deferred.promise;
     };
 
     return stats;
