@@ -31,7 +31,7 @@ module.exports = function(redisClient) {
                     console.log("\n stats error:" + error);
                 }
 //console.log("\n range:" + value, " - ", moment.format());
-                dataForRange.push = parseInt(value);
+                dataForRange.push(parseInt(value));
                 
                 if (moment.format() === toDate.format()) {
                     // todo return promise
