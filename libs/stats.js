@@ -1,7 +1,7 @@
 
 var moment = require('moment'),
     moment_range = require('moment-range'),
-    Q = require("q");;
+    Q = require("q");
 
 module.exports = function(redisClient) {
     var stats = {};
