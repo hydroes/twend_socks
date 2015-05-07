@@ -31,7 +31,7 @@ module.exports = function(redisClient) {
                     console.log("\n stats error:" + error);
                 }
                 var dateRangeData = {
-                  time: moment().unix(),
+                  time: moment.unix(),
                   value: parseInt(value)
                 };
                 dataForRange.push(dateRangeData);
