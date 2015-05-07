@@ -24,17 +24,19 @@ module.exports = function(redisClient) {
         range.by(interval, function(moment) {
             // build key with `moment`
             var key = key_prefix + moment.format('DD_MM_YYYY_HH_mm') + '_' + counterName;
-//          console.log("\n key name: " + key);  
+
             redisClient.get(key, function(error, value) {
                 if (error !== null)
                 {
                     console.log("\n stats error:" + error);
                 }
-//console.log("\n range:" + value, " - ", moment.format());
-                dataForRange.push(parseInt(value));
+                var dateRangeData = {
+                  time: moment().unix(),
+                  value: parseInt(value)
+                };
+                dataForRange.push(dateRangeData);
                 
                 if (moment.format() === toDate.format()) {
-                    // todo return promise
                     deferred.resolve(dataForRange); 
                 }
 

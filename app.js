@@ -6,7 +6,8 @@ var app = require('http').createServer(),
     redis = require('node-redis'),
     moment = require('moment'),
     moment_range = require('moment-range'),
-    zmq = require('zmq');
+    zmq = require('zmq')
+    Q = require("q");
 
 app.listen(443);
 
@@ -36,14 +37,15 @@ io.sockets.on('connection', function (socket) {
     
     socket.emit('init', {connected: true});
     
-    socket.emit('stats-for-last', function ()
-    {
-        var startDate = moment();
-        var endDate = startDate.subtract(1, 'days');
-        console.log("\n startDate:", startDate);  
-        var last_day_love = stats.getByNamePeriod('love', startDate, endDate, 'minutes');
-        socket.emit('stats-for-last', JSON.stringify(last_day_love));
+    
+    var startDate = moment();
+    var endDate = startDate.subtract(1, 'days');
+
+    Q.when(stats.getByNamePeriod('love', startDate, endDate, 'minute'), function(data) {
+        socket.emit('stats-for-last', JSON.stringify(data));
     });
+        
+    
 
     socket.on('disconnect', function(){});
 
