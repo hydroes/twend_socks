@@ -30,11 +30,11 @@ module.exports = function(redisClient) {
                 {
                     console.log("\n stats error:" + error);
                 }
-                var dateRangeData = {
+                
+                dataForRange.push({
                   time: moment.unix(),
                   value: parseInt(value)
-                };
-                dataForRange.push(dateRangeData);
+                });
                 
                 if (moment.format() === toDate.format()) {
                     deferred.resolve(dataForRange); 
