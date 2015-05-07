@@ -32,8 +32,8 @@ module.exports = function(redisClient) {
                 }
                 
                 dataForRange.push({
-                  time: moment.unix(),
-                  value: parseInt(value)
+                  'time': moment.unix(),
+                  'value': value
                 });
                 
                 if (moment.format() === toDate.format()) {
