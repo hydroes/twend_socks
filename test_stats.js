@@ -13,7 +13,14 @@ console.log("\n fromDate, toDate:", fromDate.format(), toDate.format());
 //var last_day_love = stats.getByNamePeriod('total', fromDate, toDate, 'minute');
 
 Q.when(stats.getByNamePeriod('total', fromDate, toDate, 'minute'), function(data) {
-    console.log("\n data:", parseInt(data));
+    console.log("\n data:", data);
+	var total = 0;
+/*	for (var i = 0; i < data.length; i++) {
+		total += data[i];
+	}
+
+	console.log('total', total);
+*/
 });
 
 
