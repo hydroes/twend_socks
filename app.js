@@ -37,16 +37,11 @@ io.sockets.on('connection', function (socket) {
     
     socket.emit('init', {connected: true});
         
-    
-
-
     var fromDate = moment().subtract(2, 'day');
     var toDate = moment().subtract(1, 'day');
-    //console.log("\n fromDate, toDate:", fromDate.format(), toDate.format());
-//var last_day_love = stats.getByNamePeriod('total', fromDate, toDate, 'minute');
 
     Q.when(stats.getByNamePeriod('total', fromDate, toDate, 'minute'), function(data) {
-	socket.emit('stats-for-last', data);
+	   socket.emit('stats-for-last', data);
     });
 
     socket.on('disconnect', function(){});
