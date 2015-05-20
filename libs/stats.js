@@ -5,6 +5,7 @@ var moment = require('moment'),
 
 module.exports = function(redisClient) {
     var stats = {};
+    var keys = ['love', 'hate'];
     var key_prefix = 'laravel:';
     
     /**
@@ -31,17 +32,12 @@ module.exports = function(redisClient) {
                     console.log("\n stats error:" + error);
                 }
 
-                
                 dataForRange.push({
                   'time': moment.unix(),
                   'value': parseInt(value)
                 });
-
-		//console.log(parseInt(value));
-		// dataForRange.push(parseInt(value));
                 
                 if (moment.format() === toDate.format()) {
-			//console.log('dataForRange', dataForRange);
                     deferred.resolve(dataForRange); 
                 }
 
@@ -52,5 +48,20 @@ module.exports = function(redisClient) {
         return deferred.promise;
     };
 
+    stats.getAll = function(fromDate, toDate, interval) {
+        // go thru range then keywords add keyword total to range key
+        // data will look like so: [[timestanmp, keyval1, keyval2]]
+        var keywords = ['love', 'hate', 'think', 'believe', 'want'];
+	var stat_promises = [];
+
+        for (var i = 0; i < keywords.length; i++) {
+            console.log(keywords[i])
+		stat_promises.push(stats.getByNamePeriod(keywords[i], fromDate, toDate, interval));
+        }
+
+	return Q.all(stat_promises);
+    }
+
     return stats;
 };
+
