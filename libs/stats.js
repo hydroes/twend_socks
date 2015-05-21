@@ -40,7 +40,7 @@ module.exports = function(redisClient) {
                 if (moment.format() === toDate.format()) {
                     var data = {
                         counterName: counterName,
-                        data: dataForRange
+                        counterData: dataForRange
                     }
                     deferred.resolve(data); 
                 }
@@ -65,6 +65,14 @@ module.exports = function(redisClient) {
 
         Q.all(stat_promises).then(function(stats) {
             deferred.resolve(stats); 
+
+            /*var tabularStats = [];
+
+            var statsLen = stats.length;
+            for (var i = 0; i < statsLen; i++) {
+
+            } */
+
         });
 
         return deferred.promise;
