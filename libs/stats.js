@@ -38,7 +38,11 @@ module.exports = function(redisClient) {
                 });
                 
                 if (moment.format() === toDate.format()) {
-                    deferred.resolve(dataForRange); 
+                    var data = {
+                        counterName: counterName,
+                        data: dataForRange
+                    }
+                    deferred.resolve(data); 
                 }
 
             });
@@ -49,17 +53,21 @@ module.exports = function(redisClient) {
     };
 
     stats.getAll = function(fromDate, toDate, interval) {
+        var deferred = Q.defer();
         // go thru range then keywords add keyword total to range key
         // data will look like so: [[timestanmp, keyval1, keyval2]]
-        var keywords = ['love', 'hate', 'think', 'believe', 'want'];
-	var stat_promises = [];
+        var keywords = ['love', 'hate', 'think', 'believe', 'want', 'total'];
+        var stat_promises = [];
 
         for (var i = 0; i < keywords.length; i++) {
-            console.log(keywords[i])
-		stat_promises.push(stats.getByNamePeriod(keywords[i], fromDate, toDate, interval));
+            stat_promises.push(stats.getByNamePeriod(keywords[i], fromDate, toDate, interval));
         }
 
-	return Q.all(stat_promises);
+        Q.all(stat_promises).then(function(stats) {
+            deferred.resolve(stats); 
+        });
+
+        return deferred.promise;
     }
 
     return stats;
