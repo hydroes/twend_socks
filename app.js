@@ -40,7 +40,7 @@ io.sockets.on('connection', function (socket) {
     var fromDate = moment().subtract(2, 'day');
     var toDate = moment().subtract(1, 'day');
 
-    Q.when(stats.getByNamePeriod('total', fromDate, toDate, 'minute'), function(data) {
+    Q.when(stats.getAll(fromDate, toDate, 'minute'), function(data) {
 	   socket.emit('stats-for-last', data);
     });
 
