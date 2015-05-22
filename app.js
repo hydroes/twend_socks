@@ -36,12 +36,14 @@ io.sockets.on('connection', function (socket) {
     socket.set('feed_paused', false, function(){});
     
     socket.emit('init', {connected: true});
-        
-    var fromDate = moment().subtract(2, 'day');
-    var toDate = moment().subtract(1, 'day');
 
-    Q.when(stats.getAll(fromDate, toDate, 'minute'), function(data) {
-	   socket.emit('stats-for-last', data);
+    socket.on('stats-for-last', function() {
+        var fromDate = moment().subtract(2, 'day');
+        var toDate = moment().subtract(1, 'day');
+
+        Q.when(stats.getAll(fromDate, toDate, 'minute'), function(data) {
+           socket.emit('stats-for-last', data);
+        });
     });
 
     socket.on('disconnect', function(){});
